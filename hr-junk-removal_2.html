@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR Junk Removal — We Haul, You Relax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#141310;
+    --asphalt-2:#1d1b17;
+    --steel:#3d3b36;
+    --concrete:#e9e5da;
+    --concrete-dim:#c9c4b6;
+    --orange:#e8590c;
+    --orange-dark:#b8430a;
+    --caution:#f2a65a;
+    --rust:#8c3b14;
+    --font-display:'Anton', sans-serif;
+    --font-body:'Work Sans', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--asphalt);
+    color:var(--concrete);
+    font-family:var(--font-body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* Caution stripe divider */
+  .stripe{
+    height:14px;
+    background:repeating-linear-gradient(
+      -45deg,
+      var(--orange) 0 22px,
+      var(--asphalt) 22px 44px
+    );
+  }
+  .stripe.thin{height:8px;}
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:var(--asphalt);
+    border-bottom:2px solid var(--steel);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+  }
+  .logo{
+    font-family:var(--font-display);
+    font-size:28px;
+    letter-spacing:0.5px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo .badge{
+    background:var(--orange);
+    color:var(--asphalt);
+    width:40px;height:40px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+    border-radius:4px;
+    transform:rotate(-3deg);
+  }
+  .nav-links{display:flex;gap:32px;align-items:center;}
+  .nav-links a{
+    font-family:var(--font-mono);
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--concrete-dim);
+    transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--orange);}
+  .nav-cta{
+    background:var(--orange);
+    color:var(--asphalt);
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    border-radius:2px;
+    transition:background .2s, transform .15s;
+  }
+  .nav-cta:hover{background:var(--caution); transform:translateY(-1px);}
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* Hero */
+  .hero{
+    position:relative;
+    padding:90px 0 70px;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(232,89,12,0.14), transparent 55%),
+      var(--asphalt);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--steel) 1px, transparent 1px),
+      linear-gradient(90deg, var(--steel) 1px, transparent 1px);
+    background-size:56px 56px;
+    opacity:0.08;
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center;
+  }
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--orange);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:28px;height:2px;
+    background:var(--orange);
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-size:clamp(44px, 6.4vw, 84px);
+    line-height:0.96;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+  }
+  .hero h1 .accent{color:var(--orange);}
+  .hero p.sub{
+    margin-top:22px;
+    font-size:18px;
+    color:var(--concrete-dim);
+    max-width:480px;
+  }
+  .hero-actions{
+    margin-top:34px;
+    display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:16px 30px;
+    border-radius:2px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    transition:transform .15s, background .2s;
+    cursor:pointer;
+    border:2px solid transparent;
+  }
+  .btn-primary{ background:var(--orange); color:var(--asphalt); }
+  .btn-primary:hover{ background:var(--caution); transform:translateY(-2px); }
+  .btn-outline{ border-color:var(--steel); color:var(--concrete); }
+  .btn-outline:hover{ border-color:var(--orange); color:var(--orange); }
+
+  /* Load ticket - signature element */
+  .ticket{
+    background:var(--concrete);
+    color:var(--asphalt);
+    border-radius:4px;
+    padding:26px 26px 22px;
+    position:relative;
+    box-shadow:0 20px 50px rgba(0,0,0,0.45);
+    transform:rotate(1.5deg);
+    font-family:var(--font-mono);
+  }
+  .ticket::before{
+    content:"";
+    position:absolute; top:-10px; left:24px;
+    width:34px; height:20px;
+    background:var(--steel);
+    border-radius:0 0 4px 4px;
+    opacity:0.5;
+  }
+  .ticket-head{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    border-bottom:2px dashed var(--steel);
+    padding-bottom:14px; margin-bottom:14px;
+  }
+  .ticket-head .t-label{ font-size:11px; letter-spacing:1.5px; color:var(--rust); font-weight:700;}
+  .ticket-head .t-num{ font-size:22px; font-weight:700; }
+  .ticket-row{
+    display:flex; justify-content:space-between;
+    font-size:13px; padding:7px 0;
+    border-bottom:1px solid rgba(20,19,16,0.1);
+  }
+  .ticket-row span:first-child{ color:var(--steel); }
+  .ticket-row span:last-child{ font-weight:600; }
+  .ticket-total{
+    display:flex; justify-content:space-between;
+    margin-top:14px; padding-top:14px;
+    border-top:2px solid var(--asphalt);
+    font-size:17px; font-weight:700;
+  }
+  .ticket-stamp{
+    position:absolute; bottom:20px; right:22px;
+    border:3px solid var(--orange);
+    color:var(--orange);
+    font-family:var(--font-display);
+    font-size:13px;
+    letter-spacing:1px;
+    padding:5px 12px;
+    border-radius:4px;
+    transform:rotate(-8deg);
+    opacity:0.9;
+  }
+
+  /* Section headers */
+  .section{ padding:88px 0; }
+  .section-head{ max-width:640px; margin-bottom:52px; }
+  .section-head .eyebrow{ margin-bottom:14px; }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-size:clamp(32px,4.2vw,52px);
+    text-transform:uppercase;
+    line-height:1.02;
+  }
+  .section-head p{
+    margin-top:16px; color:var(--concrete-dim); font-size:16px; max-width:520px;
+  }
+
+  /* Services */
+  .services{ background:var(--asphalt-2); }
+  .service-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:2px;
+    background:var(--steel);
+    border:2px solid var(--steel);
+  }
+  .service-card:last-child{ grid-column:1 / -1; }
+  @media (max-width:860px){ .service-grid{grid-template-columns:1fr;} .service-card:last-child{ grid-column:auto; } }
+  .service-card{
+    background:var(--asphalt);
+    padding:34px 28px;
+    transition:background .2s;
+  }
+  .service-card:hover{ background:#201e19; }
+  .service-num{
+    font-family:var(--font-mono);
+    color:var(--orange);
+    font-size:13px;
+    margin-bottom:18px;
+    display:block;
+  }
+  .service-card h3{
+    font-family:var(--font-display);
+    font-size:22px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    letter-spacing:0.3px;
+  }
+  .service-card p{ color:var(--concrete-dim); font-size:14.5px; }
+
+  /* How it works - numbered, real sequence */
+  .steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    position:relative;
+  }
+  @media (max-width:860px){ .steps{grid-template-columns:1fr; gap:36px;} }
+  .step{ position:relative; padding-right:24px; }
+  .step:not(:last-child)::after{
+    content:"";
+    position:absolute; top:26px; right:-2px; width:100%; height:2px;
+    background:repeating-linear-gradient(90deg, var(--steel) 0 8px, transparent 8px 14px);
+  }
+  @media (max-width:860px){ .step:not(:last-child)::after{ display:none; } }
+  .step-index{
+    font-family:var(--font-display);
+    font-size:46px;
+    color:var(--orange);
+    line-height:1;
+    margin-bottom:16px;
+  }
+  .step h4{
+    font-family:var(--font-display);
+    font-size:18px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .step p{ color:var(--concrete-dim); font-size:14px; }
+
+  /* Pricing / quote band */
+  .quote-band{
+    background:var(--orange);
+    color:var(--asphalt);
+    padding:70px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .quote-band::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:repeating-linear-gradient(-45deg, rgba(20,19,16,0.06) 0 20px, transparent 20px 40px);
+  }
+  .quote-inner{
+    position:relative; z-index:2;
+    display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap;
+  }
+  .quote-inner h2{
+    font-family:var(--font-display);
+    font-size:clamp(28px,3.6vw,44px);
+    text-transform:uppercase;
+    max-width:560px;
+    line-height:1.05;
+  }
+  .quote-band .btn-primary{ background:var(--asphalt); color:var(--concrete); }
+  .quote-band .btn-primary:hover{ background:#26241f; }
+
+  /* Testimonials */
+  .testi-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+  }
+  @media (max-width:860px){ .testi-grid{grid-template-columns:1fr;} }
+  .testi-card{
+    border:1px solid var(--steel);
+    border-radius:4px;
+    padding:26px;
+    background:var(--asphalt-2);
+  }
+  .testi-stars{ color:var(--caution); font-size:14px; margin-bottom:14px; letter-spacing:2px; }
+  .testi-card p{ font-size:15px; color:var(--concrete-dim); margin-bottom:18px; }
+  .testi-name{ font-family:var(--font-mono); font-size:13px; color:var(--concrete); }
+  .testi-name span{ color:var(--steel); }
+
+  /* Service area */
+  .area{ background:var(--asphalt-2); }
+  .area-inner{
+    display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;
+  }
+  @media (max-width:860px){ .area-inner{grid-template-columns:1fr;} }
+  .area-list{ list-style:none; }
+  .area-list li{
+    font-family:var(--font-mono);
+    font-size:14px;
+    padding:12px 0;
+    border-bottom:1px solid var(--steel);
+    display:flex; justify-content:space-between;
+  }
+  .area-list li span:last-child{ color:var(--orange); }
+
+  /* Final CTA */
+  .cta{
+    text-align:center;
+    padding:100px 0;
+  }
+  .cta h2{
+    font-family:var(--font-display);
+    font-size:clamp(36px,6vw,68px);
+    text-transform:uppercase;
+    line-height:0.98;
+  }
+  .cta .accent{ color:var(--orange); }
+  .cta p{ color:var(--concrete-dim); margin:20px auto 34px; max-width:480px; }
+
+  footer{
+    border-top:2px solid var(--steel);
+    padding:44px 0 30px;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--concrete-dim);
+  }
+  .footer-grid{
+    display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;
+  }
+  .footer-grid .logo{ font-size:22px; margin-bottom:10px; }
+  .footer-links{ display:flex; gap:24px; flex-wrap:wrap; }
+  .footer-links a:hover{ color:var(--orange); }
+  .fine{ margin-top:30px; opacity:0.5; font-size:11.5px; }
+
+  ::selection{ background:var(--orange); color:var(--asphalt); }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="badge">HR</span> HR JUNK REMOVAL</div>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#process">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#area">Service Area</a>
+    </nav>
+    <a href="tel:+12604401388" class="nav-cta">Call or Text Us</a>
+  </div>
+</header>
+<div class="stripe"></div>
+
+<section class="hero">
+  <div class="wrap hero-grid" style="grid-template-columns:1fr; max-width:720px;">
+    <div>
+      <h1>You point.<br>We haul<span class="accent">.</span><br>Done<span class="accent">.</span></h1>
+      <p class="sub">Furniture, appliances, construction debris, whole-property cleanouts — if it's heavy and in your way, we load it, haul it, and sweep up after.</p>
+      <div class="hero-actions">
+        <a href="tel:+12604401388" class="btn btn-primary">Call (260) 440-1388</a>
+        <a href="sms:+12604401388" class="btn btn-outline">Text Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stripe thin"></div>
+
+<section class="section services" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What We Take</div>
+      <h2>If two guys can lift it, we take it</h2>
+      <p>No sorting, no dragging it to the curb yourself. We do the heavy lifting — literally — and leave the space broom-clean.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="service-grid">
+      <div class="service-card">
+        <span class="service-num">01 / FURNITURE</span>
+        <h3>Furniture &amp; Appliances</h3>
+        <p>Couches, mattresses, washers, fridges, treadmills — the stuff that took three people to bring in takes one call to take out.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">02 / PROPERTY</span>
+        <h3>Estate &amp; Property Cleanouts</h3>
+        <p>Full house, garage, or storage unit cleanouts for moves, evictions, foreclosures, and estate turnovers.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">03 / CONSTRUCTION</span>
+        <h3>Construction Debris</h3>
+        <p>Drywall, flooring, cabinets, fencing — post-renovation and demo debris hauled off the job site fast.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">04 / YARD</span>
+        <h3>Yard &amp; Storm Debris</h3>
+        <p>Branches, fencing, old sheds, storm cleanup. We clear the lot so you don't have to look at it anymore.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">05 / OFFICE</span>
+        <h3>Office &amp; Commercial</h3>
+        <p>Old desks, cubicles, electronics, and fixtures cleared out during business hours or after close.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">The Process</div>
+      <h2>Book it, we haul it, you're done</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-index">01</div>
+        <h4>Call or Text Us</h4>
+        <p>Tell us what you need gone, or send a few photos over text so we know what we're working with.</p>
+      </div>
+      <div class="step">
+        <div class="step-index">02</div>
+        <h4>Get Your Price</h4>
+        <p>We give you a flat price over the phone or by text — no need to be home for someone to come look first.</p>
+      </div>
+      <div class="step">
+        <div class="step-index">03</div>
+        <h4>We Load &amp; Haul</h4>
+        <p>You point, we lift. We handle stairs, tight spots, and anything heavier than it looks.</p>
+      </div>
+      <div class="step">
+        <div class="step-index">04</div>
+        <h4>Sort, Donate, Dispose</h4>
+        <p>Usable items get donated locally, scrap gets recycled, the rest is disposed of properly. Space swept clean.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-band" id="pricing">
+  <div class="wrap quote-inner">
+    <h2>Flat, upfront pricing. No dumpster rental. No surprise fees.</h2>
+    <a href="tel:+12604401388" class="btn btn-primary">Call for Your Price →</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Word On The Street</div>
+      <h2>What the neighborhood says</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Texted a few pictures, got a price back fast, and had the old sectional and two mattresses out in twenty minutes. Didn't scratch a wall."</p>
+        <div class="testi-name">— Danielle M. <span>· Furniture Removal</span></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Cleared my mother's entire garage after the estate sale. Showed up on time and left it broom clean."</p>
+        <div class="testi-name">— Carlos R. <span>· Estate Cleanout</span></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Used them after a kitchen demo. Debris was gone same day, price matched exactly what was quoted."</p>
+        <div class="testi-name">— Priya S. <span>· Construction Debris</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section area" id="area">
+  <div class="wrap area-inner">
+    <div>
+      <div class="eyebrow">Service Area</div>
+      <h2 style="font-family:var(--font-display); font-size:clamp(28px,3.6vw,40px); text-transform:uppercase; line-height:1.05;">Rolling trucks across the Tampa area</h2>
+      <p style="margin-top:16px; color:var(--concrete-dim); max-width:440px;">Not listed? Call anyway — we cover most of the surrounding area on request.</p>
+    </div>
+    <ul class="area-list">
+      <li><span>Tampa</span></li>
+      <li><span>Riverview</span></li>
+      <li><span>Wesley Chapel</span></li>
+      <li><span>Brandon</span></li>
+    </ul>
+  </div>
+</section>
+
+<div class="stripe"></div>
+
+<section class="cta" id="quote">
+  <div class="wrap">
+    <h2>Got junk<span class="accent">?</span><br>Got a truck<span class="accent">.</span></h2>
+    <p>Flat pricing over the phone or by text, and a crew that shows up when it says it will.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="tel:+12604401388" class="btn btn-primary">Call (260) 440-1388</a>
+      <a href="sms:+12604401388" class="btn btn-outline">Text Us</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="logo"><span class="badge">HR</span> HR JUNK REMOVAL</div>
+      <div>Tampa Area · Open Every Day</div>
+    </div>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#process">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#area">Service Area</a>
+      <a href="tel:+12604401388">(260) 440-1388</a>
+    </div>
+  </div>
+  <div class="wrap fine">© 2026 HR Junk Removal. Placeholder contact info &amp; service details — swap in your real numbers, logo, and coverage area.</div>
+</footer>
+
+</body>
+</html>
